@@ -2,41 +2,41 @@
 
 import { getBooks, getBooksWithAuthors } from "@/app/actions/book";
 import { BookWithAuthors } from "@/app/lib/types";
-import { Book } from "@prisma/client";
-import { useEffect, useState } from "react";
+import { ChangeEvent, useEffect, useState } from "react";
+import BooksTable from "./books-table";
+import AdminHeader from "./admin-header";
+import AdminAddBook from "./admin-addbook";
 
 export default function AdminBooks(){
-    const [books, setBooks] = useState<BookWithAuthors[] | undefined>(undefined);
+    const [books, setBooks] = useState<BookWithAuthors[]>([]);
+    const [addDialogState, setAddDialogState] = useState<boolean>(false);
 
     useEffect(() => {
         const fetchBooks = async () => {
             const fetchedBooks = await getBooksWithAuthors();
             setBooks(fetchedBooks);
-            console.log(fetchedBooks);
         }
         fetchBooks();
     }, [])
 
+    const showDialog = () => {
+        setAddDialogState(true);
+    }
+
+    const cancelAction = (e: React.MouseEvent) => {
+        e.preventDefault();
+        setAddDialogState(false);
+    }
+
     return (
         <>
-            <table className="border-collapse border border-gray-700">
-                <thead>
-                    <tr className="[&>*]:p-2 [&>*]:border [&>*]:border-gray-700">
-                        <td>ID</td>
-                        <td>Title</td>
-                        <td>Author(s)</td>
-                    </tr>
-                </thead>
-                <tbody>
-                    {books?.map((book) => (
-                        <tr key={book.id} className="[&>*]:p-2 [&>*]:border [&>*]:border-gray-700">
-                            <td>{book.id}</td>
-                            <td>{book.title}</td>
-                            <td>{book.authors[0].name}</td>
-                        </tr>
-                    ))}
-                </tbody>
-            </table>
+            {!addDialogState ? <div>
+                <AdminHeader showDialog={showDialog}></AdminHeader>
+                <BooksTable books={books} />
+            </div> : 
+            <div>
+                <AdminAddBook cancelAction={cancelAction} submitAction={() => {}}></AdminAddBook>
+            </div> }
         </>
     )
 }
