@@ -1,16 +1,18 @@
 "use client";
 
-import { getBooks } from "@/app/actions/book";
+import { getBooks, getBooksWithAuthors } from "@/app/actions/book";
+import { BookWithAuthors } from "@/app/lib/types";
 import { Book } from "@prisma/client";
 import { useEffect, useState } from "react";
 
 export default function AdminBooks(){
-    const [books, setBooks] = useState<Book[] | undefined>(undefined);
+    const [books, setBooks] = useState<BookWithAuthors[] | undefined>(undefined);
 
     useEffect(() => {
         const fetchBooks = async () => {
-            const fetchedBooks = await getBooks();
+            const fetchedBooks = await getBooksWithAuthors();
             setBooks(fetchedBooks);
+            console.log(fetchedBooks);
         }
         fetchBooks();
     }, [])
@@ -30,7 +32,7 @@ export default function AdminBooks(){
                         <tr key={book.id} className="[&>*]:p-2 [&>*]:border [&>*]:border-gray-700">
                             <td>{book.id}</td>
                             <td>{book.title}</td>
-                            <td>{book.id}</td>
+                            <td>{book.authors[0].name}</td>
                         </tr>
                     ))}
                 </tbody>
