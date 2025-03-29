@@ -1,23 +1,10 @@
 "use client";
 
-import { useEffect, useState } from "react";
-import { addAuthor, getAuthorById } from "../actions/author";
-import { Author } from "@prisma/client";
 import { addBook } from "../actions/book";
 
 export default function Main(){
-    const [testAuthor, setTestAuthor] = useState<Author | undefined>(undefined);
-    useEffect(() => {
-        const getAuthor = async () => {
-            const fetchedAuthor = await getAuthorById(1);
-            setTestAuthor(fetchedAuthor);
-        }
-        getAuthor();
-    }, [])
-
     const handleAddBook = async () => {
-        if(!testAuthor) return;
-        const fetchedBook = await addBook("Teszt könyv", testAuthor);
+        const fetchedBook = await addBook("Teszt könyv", 1);
         console.log(fetchedBook);
     }
 
