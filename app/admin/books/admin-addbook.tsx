@@ -27,8 +27,8 @@ export default function AdminAddBook(
                         <input placeholder="Author ID" type="tel" value={authorId} onChange={(e) => setAuthorId(e.target.value)} className="block w-full p-2 bg-gray-700 rounded-lg"></input>
                     </div>
                     <div className="grid grid-cols-2 gap-2">
-                        <button onClick={(e) => cancelAction(e)} className="p-2 bg-gray-200 rounded-lg text-gray-700">Cancel</button>
-                        <button type="submit" className="p-2 bg-gray-700 rounded-lg">Submit</button>
+                        <button onClick={(e) => cancelAction(e)} className="p-2 bg-gray-200 rounded-lg text-gray-700 cursor-pointer">Cancel</button>
+                        <button type="submit" className="p-2 bg-gray-700 rounded-lg cursor-pointer">Submit</button>
                     </div>
                 </form>
             </div>
