@@ -31,7 +31,7 @@ export default function AdminBooks(){
     const submitBook = async (e: React.FormEvent, bookTitle: string, authorId: string) => {
         e.preventDefault();
         if(bookTitle.length === 0 || authorId.length === 0) return;
-        const newBook = await addBook(bookTitle, 1);
+        const newBook = await addBook(bookTitle, Number(authorId));
     }
 
     return (
