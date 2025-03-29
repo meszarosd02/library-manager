@@ -1,10 +1,10 @@
 "use client";
 
-import { getBooks, getBooksWithAuthors } from "@/app/actions/book";
+import { addBook, getBooksWithAuthors } from "@/app/actions/book";
 import { BookWithAuthors } from "@/app/lib/types";
-import { ChangeEvent, useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import BooksTable from "./books-table";
-import AdminHeader from "./admin-header";
+import AdminHeader from "../../components/admin-header";
 import AdminAddBook from "./admin-addbook";
 
 export default function AdminBooks(){
@@ -28,14 +28,20 @@ export default function AdminBooks(){
         setAddDialogState(false);
     }
 
+    const submitBook = async (e: React.FormEvent, bookTitle: string, authorId: string) => {
+        e.preventDefault();
+        if(bookTitle.length === 0 || authorId.length === 0) return;
+        const newBook = await addBook(bookTitle, 1);
+    }
+
     return (
         <>
             {!addDialogState ? <div>
-                <AdminHeader showDialog={showDialog}></AdminHeader>
+                <AdminHeader showDialog={showDialog} title="Admin Books"></AdminHeader>
                 <BooksTable books={books} />
             </div> : 
             <div>
-                <AdminAddBook cancelAction={cancelAction} submitAction={() => {}}></AdminAddBook>
+                <AdminAddBook cancelAction={cancelAction} submitAction={submitBook}></AdminAddBook>
             </div> }
         </>
     )
