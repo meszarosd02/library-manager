@@ -67,10 +67,10 @@ export default function AdminAddBook(
                         <p className="text-lg font-bold text-gray-200">Add new book</p>
                         <input placeholder="Title" value={bookTitle} onChange={(e) => setBookTitle(e.target.value)} className="block w-full p-2 bg-gray-700 rounded-lg"></input>
                         <input placeholder="Author ID" value={authorName} onChange={(e) => {if(selectedAuthor) setSelectedAuthor(undefined);setAuthorName(e.target.value)}} className="block w-full p-2 bg-gray-700 rounded-lg"></input>
-                        {queryResults.length > 0 && <div className="block w-full border border-gray-700">
+                        {queryResults.length > 0 && <div className="block w-full overflow-y-auto max-h-30">
                             <div className="flex flex-col">
                                 {queryResults.map((author) => (
-                                    <div key={author.id} onClick={() => queryClick(author)} className="cursor-pointer block w-full h-10 divide-y divide-gray-700 bg-gray-700 p-2 hover:bg-gray-500">{author.name}</div>
+                                    <div key={author.id} onClick={() => queryClick(author)} className="cursor-pointer block w-full h-10 divide-y divide-gray-400 bg-gray-700 p-2 hover:bg-gray-500">{author.name}</div>
                                 ))}
                             </div>
                         </div>}
