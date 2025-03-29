@@ -16,12 +16,14 @@ export async function getBooksWithAuthors(){
     }) as BookWithAuthors[];
 }
 
-export async function addBook(title: string, author: Author){
+export async function addBook(title: string, authorId: number){
     return await prisma.book.create({
         data: {
             title: title,
             authors: {
-                connect: author
+                connect: {
+                    id: authorId
+                }
             }
         }
     }) as Book;

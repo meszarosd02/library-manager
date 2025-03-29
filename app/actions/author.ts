@@ -22,3 +22,13 @@ export async function addAuthor(name: string){
         }
     }) as Author
 }
+
+export async function searchAuthor(query: string){
+    return await prisma.author.findMany({
+        where: {
+            name: {
+                contains: query
+            }
+        }
+    }) as Author[]
+}
