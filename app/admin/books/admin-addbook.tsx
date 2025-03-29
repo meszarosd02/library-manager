@@ -12,7 +12,7 @@ export default function AdminAddBook(
      : 
     {
         cancelAction : (e: React.MouseEvent) => void,
-        submitAction : (e: React.FormEvent, bookTitle: string, authorId: string) => void
+        submitAction : (e: React.FormEvent, bookTitle: string, author: Author) => void
     }
 ){
 
@@ -48,7 +48,8 @@ export default function AdminAddBook(
 
     //call the submit function passed down from prop, and also reset the input fields
     const localSubmit = (e: React.FormEvent) => {
-        submitAction(e, bookTitle, authorName);
+        if(!selectedAuthor) return;
+        submitAction(e, bookTitle, selectedAuthor);
         setBookTitle("");
         setAuthorName("");
     }

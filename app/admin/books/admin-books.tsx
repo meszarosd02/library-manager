@@ -6,6 +6,7 @@ import React, { useEffect, useState } from "react";
 import BooksTable from "./books-table";
 import AdminHeader from "../../components/admin-header";
 import AdminAddBook from "./admin-addbook";
+import { Author } from "@prisma/client";
 
 export default function AdminBooks(){
     const [books, setBooks] = useState<BookWithAuthors[]>([]);
@@ -28,10 +29,10 @@ export default function AdminBooks(){
         setAddDialogState(false);
     }
 
-    const submitBook = async (e: React.FormEvent, bookTitle: string, authorId: string) => {
+    const submitBook = async (e: React.FormEvent, bookTitle: string, author: Author) => {
         e.preventDefault();
-        if(bookTitle.length === 0 || authorId.length === 0) return;
-        const newBook = await addBook(bookTitle, Number(authorId));
+        if(bookTitle.length === 0) return;
+        const newBook = await addBook(bookTitle, author.id);
     }
 
     return (
