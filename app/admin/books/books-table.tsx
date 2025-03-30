@@ -23,7 +23,7 @@ export default function BooksTable(
                 </thead>
                 <tbody>
                     {books?.map((book) => (
-                        <tr key={book.id} className="[&>*]:p-2 [&>*]:border [&>*]:border-gray-700" onClick={() => onBookClicked(book)}>
+                        <tr key={book.id} className="[&>*]:p-2 [&>*]:border [&>*]:border-gray-700 cursor-pointer" onClick={() => onBookClicked(book)}>
                             <td>{book.id}</td>
                             <td>{book.title}</td>
                             <td>{book.authors[0].name}</td>
