@@ -1,6 +1,16 @@
 import { BookWithAuthors } from "@/app/lib/types";
 
-export default function BooksTable({books}: {books: BookWithAuthors[]}){
+export default function BooksTable(
+    {
+        books, 
+        onBookClicked 
+    }
+    :
+    { 
+        books: BookWithAuthors[],
+        onBookClicked: (book: BookWithAuthors) => void
+    }
+) {
     return (
         <>
             {books.length > 0 && <table className="border-collapse border border-gray-700">
@@ -13,7 +23,7 @@ export default function BooksTable({books}: {books: BookWithAuthors[]}){
                 </thead>
                 <tbody>
                     {books?.map((book) => (
-                        <tr key={book.id} className="[&>*]:p-2 [&>*]:border [&>*]:border-gray-700">
+                        <tr key={book.id} className="[&>*]:p-2 [&>*]:border [&>*]:border-gray-700" onClick={() => onBookClicked(book)}>
                             <td>{book.id}</td>
                             <td>{book.title}</td>
                             <td>{book.authors[0].name}</td>
