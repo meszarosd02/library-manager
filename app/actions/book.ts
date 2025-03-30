@@ -28,3 +28,11 @@ export async function addBook(title: string, authorId: number){
         }
     }) as Book;
 }
+
+export async function deleteBookById(bookId: number){
+    return await prisma.book.delete({
+        where: {
+            id: bookId
+        }
+    }) as Book;
+}
