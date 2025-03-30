@@ -1,6 +1,6 @@
 "use client";
 
-import { addBook, getBooksWithAuthors } from "@/app/actions/book";
+import { addBook, deleteBookById, getBooksWithAuthors } from "@/app/actions/book";
 import { ADMIN_BOOK_STATE, BookWithAuthors } from "@/app/lib/types";
 import React, { useEffect, useState } from "react";
 import BooksTable from "./books-table";
@@ -15,11 +15,12 @@ export default function AdminBooks(){
 
     const [adminBookState, setAdminBookState] = useState<ADMIN_BOOK_STATE>(ADMIN_BOOK_STATE.TABLE);
 
+    const fetchBooks = async () => {
+        const fetchedBooks = await getBooksWithAuthors();
+        setBooks(fetchedBooks);
+    }
+
     useEffect(() => {
-        const fetchBooks = async () => {
-            const fetchedBooks = await getBooksWithAuthors();
-            setBooks(fetchedBooks);
-        }
         fetchBooks();
     }, [])
     const bookDetails = (book: BookWithAuthors) => {
@@ -40,6 +41,7 @@ export default function AdminBooks(){
         e.preventDefault();
         if(bookTitle.length === 0) return;
         await addBook(bookTitle, author.id);
+        await fetchBooks();
     }
 
     const renderSwitch = (state: ADMIN_BOOK_STATE) => {
@@ -67,9 +69,15 @@ export default function AdminBooks(){
 
     const detailsState = (book: BookWithAuthors) => (
         <div>
-            <AdminBookDetails book={book} />
+            <AdminBookDetails book={book} backAction={() => setAdminBookState(ADMIN_BOOK_STATE.TABLE)} onBookDelete={bookDelete} />
         </div>
     )
+
+    const bookDelete = async (book: BookWithAuthors) => {
+        const deletedBook = await deleteBookById(book.id);
+        setBooks((prevBooks) => prevBooks.filter((book) => book.id !== deletedBook.id))
+        setAdminBookState(ADMIN_BOOK_STATE.TABLE);
+    }
 
     return (
         <>
