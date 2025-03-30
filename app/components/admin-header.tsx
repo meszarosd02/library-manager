@@ -2,12 +2,12 @@
 
 export default function AdminHeader(
     {
-        showDialog,
+        addAction,
         title
     }
     : 
     {
-        showDialog: () => void,
+        addAction?: () => void,
         title: string
     }){
 
@@ -17,9 +17,9 @@ export default function AdminHeader(
                 <div className="flex-1">
                     <p className="md:text-2xl md:text-left max-md:text-center max-md:text-lg">{title}</p>
                 </div>
-                <div className="md:hidden cursor-pointer" onClick={showDialog}>
+                {addAction && <div className="md:hidden cursor-pointer" onClick={addAction}>
                     <p className="text-right p-2 rounded-lg bg-gray-700 hover:bg-gray-500">+</p>
-                </div>
+                </div>}
             </div>
         </>
     )

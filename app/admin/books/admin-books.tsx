@@ -54,7 +54,7 @@ export default function AdminBooks(){
 
     const tableState = () => (
         <div>
-            <AdminHeader showDialog={showDialog} title="Admin Books"></AdminHeader>
+            <AdminHeader addAction={showDialog} title="Admin Books"></AdminHeader>
             <BooksTable books={books} onBookClicked={bookDetails} />
         </div>
     )

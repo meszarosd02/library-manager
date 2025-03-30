@@ -38,7 +38,7 @@ export default function AdminAuthors() {
     return (
         <>
             {!addDialogState ? <div>
-                <AdminHeader showDialog={showDialog} title="Admin Authors"></AdminHeader>
+                <AdminHeader addAction={showDialog} title="Admin Authors"></AdminHeader>
                 <AuthorsTable authors={authors} />
             </div> :
                 <div>

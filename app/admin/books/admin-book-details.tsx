@@ -1,5 +1,6 @@
 "use client";
 
+import AdminHeader from "@/app/components/admin-header";
 import { BookWithAuthors } from "@/app/lib/types";
 
 export default function AdminBookDetails(
@@ -11,7 +12,7 @@ export default function AdminBookDetails(
 ){
     return (
         <>
-            {book.id}
+            <AdminHeader title={book.title}></AdminHeader>
         </>
     )
 }
