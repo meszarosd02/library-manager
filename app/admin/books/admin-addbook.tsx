@@ -12,7 +12,7 @@ export default function AdminAddBook(
      : 
     {
         cancelAction : (e: React.MouseEvent) => void,
-        submitAction : (e: React.FormEvent, bookTitle: string, author: Author) => void
+        submitAction : (e: React.FormEvent, bookTitle: string, author: Author | string) => void
     }
 ){
 
@@ -48,8 +48,11 @@ export default function AdminAddBook(
 
     //call the submit function passed down from prop, and also reset the input fields
     const localSubmit = (e: React.FormEvent) => {
-        if(!selectedAuthor) return;
-        submitAction(e, bookTitle, selectedAuthor);
+        if(!selectedAuthor){
+            submitAction(e, bookTitle, authorName);
+        }else{
+            submitAction(e, bookTitle, selectedAuthor);
+        }
         setBookTitle("");
         setAuthorName("");
     }
@@ -67,7 +70,7 @@ export default function AdminAddBook(
                     <div className="flex flex-col items-center [&>*]:my-1">
                         <p className="text-lg font-bold text-gray-200">Add new book</p>
                         <input placeholder="Title" value={bookTitle} onChange={(e) => setBookTitle(e.target.value)} className="block w-full p-2 bg-gray-700 rounded-lg"></input>
-                        <input placeholder="Author ID" value={authorName} onChange={(e) => {if(selectedAuthor) setSelectedAuthor(undefined);setAuthorName(e.target.value)}} className="block w-full p-2 bg-gray-700 rounded-lg"></input>
+                        <input placeholder="Author Name" value={authorName} onChange={(e) => {if(selectedAuthor) setSelectedAuthor(undefined);setAuthorName(e.target.value)}} className="block w-full p-2 bg-gray-700 rounded-lg"></input>
                         {queryResults.length > 0 && <div className="block w-full overflow-y-auto max-h-30">
                             <div className="flex flex-col">
                                 {queryResults.map((author) => (

@@ -1,6 +1,6 @@
 "use client";
 
-import { addBook, deleteBookById, getBooksWithAuthors } from "@/app/actions/book";
+import { addBook, createBookWithAuthor, deleteBookById, getBooksWithAuthors } from "@/app/actions/book";
 import { ADMIN_BOOK_STATE, BookWithAuthors } from "@/app/lib/types";
 import React, { useEffect, useState } from "react";
 import BooksTable from "./books-table";
@@ -37,10 +37,14 @@ export default function AdminBooks(){
         setAdminBookState(ADMIN_BOOK_STATE.TABLE);
     }
 
-    const submitBook = async (e: React.FormEvent, bookTitle: string, author: Author) => {
+    const submitBook = async (e: React.FormEvent, bookTitle: string, author: Author | string) => {
         e.preventDefault();
         if(bookTitle.length === 0) return;
-        await addBook(bookTitle, author.id);
+        if(typeof author === "object" && "name" in author){ // author param is Author type
+            await addBook(bookTitle, author.id);
+        }else{
+            await createBookWithAuthor(bookTitle, author);
+        }
         await fetchBooks();
     }
 
