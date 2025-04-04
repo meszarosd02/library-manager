@@ -17,10 +17,22 @@ model Book {
   id Int @id @default(autoincrement())
   title String
   authors Author[]
+  shelf Shelf @relation(fields: [shelfId], references: [id])
+  shelfId Int
+  row_index Int @default(0)
+  col_index Int @default(0)
+  place Int @default(0)
 }
 
 model Author {
   id Int @id @default(autoincrement())
   name String
+  books Book[]
+}
+
+model Shelf {
+  id Int @id @default(autoincrement())
+  row_num Int
+  col_num Int
   books Book[]
 }
