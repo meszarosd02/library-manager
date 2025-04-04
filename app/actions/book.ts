@@ -5,7 +5,7 @@ import { prisma } from "../lib/prisma";
 import { BookWithAuthors } from "../lib/types";
 
 export async function getBooks(){
-    return await prisma.book.findMany();
+    return await prisma.book.findMany() as Book[];
 }
 
 export async function getBooksWithAuthors(){
@@ -16,7 +16,7 @@ export async function getBooksWithAuthors(){
     }) as BookWithAuthors[];
 }
 
-export async function addBook(title: string, authorId: number){
+export async function addBook(title: string, authorId: number, shelfId: number){
     return await prisma.book.create({
         data: {
             title: title,
@@ -24,12 +24,13 @@ export async function addBook(title: string, authorId: number){
                 connect: {
                     id: authorId
                 }
-            }
+            },
+            shelfId
         }
     }) as Book;
 }
 
-export async function createBookWithAuthor(title: string, authorName: string){
+export async function createBookWithAuthor(title: string, authorName: string, shelfId: number){
     return await prisma.book.create({
         data: {
             title: title,
@@ -37,7 +38,8 @@ export async function createBookWithAuthor(title: string, authorName: string){
                 create: {
                     name: authorName
                 }
-            }
+            },
+            shelfId
         }
     }) as Book;
 }
