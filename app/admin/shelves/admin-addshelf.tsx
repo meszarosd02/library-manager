@@ -10,7 +10,7 @@ export default function AdminAddShelf(
      : 
     {
         cancelAction : (e: React.MouseEvent) => void,
-        submitAction : (e: React.FormEvent, authorName: string) => void
+        submitAction : (e: React.FormEvent, shelfName: string, rowCount: number, colCount: number) => void
     }
 ){
     const [shelfName, setShelfName] = useState<string>("");
@@ -19,8 +19,10 @@ export default function AdminAddShelf(
 
     //call the submit function passed down from prop, and also reset the input fields
     const localSubmit = (e: React.FormEvent) => {
-        submitAction(e, shelfName);
+        submitAction(e, shelfName, rowCount, colCount);
         setShelfName("");
+        setRowCount(0);
+        setColCount(0);
     }
 
     return (

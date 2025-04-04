@@ -13,3 +13,8 @@ export enum ADMIN_BOOK_STATE {
     CREATE,
     DETAILS
 }
+
+export enum ADMIN_SHELF_STATE {
+    TABLE,
+    CREATE
+}
