@@ -32,6 +32,7 @@ model Author {
 
 model Shelf {
   id Int @id @default(autoincrement())
+  name String
   row_num Int
   col_num Int
   books Book[]
