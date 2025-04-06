@@ -2,7 +2,7 @@
 
 import { Book } from "@prisma/client";
 import { prisma } from "../lib/prisma";
-import { BookWithAuthors, PlaceInShelf } from "../lib/types";
+import { BookWithAuthors, PlaceInShelf, ShelfSection } from "../lib/types";
 
 export async function getBooks(){
     return await prisma.book.findMany() as Book[];
@@ -16,8 +16,40 @@ export async function getBooksWithAuthors(){
     }) as BookWithAuthors[];
 }
 
-export async function addBook(title: string, authorId: number, shelfId: number | undefined, placeInShelf: PlaceInShelf | undefined){
-    if(placeInShelf && !shelfId) throw new Error("Invalid arguments: If placeInShelf exists, shelfId cannot be undefined")
+export async function getBooksByShelfId(shelfId: number){
+    return await prisma.book.findMany({
+        where: {
+            shelfId
+        },
+        include: {
+            authors: true
+        }
+    }) as BookWithAuthors[]
+}
+
+export async function getBookCountInShelf(shelfId: number){
+    return await prisma.book.groupBy({
+        by: ["col_index", "row_index"],
+        where: {
+            id: shelfId
+        }
+    })
+}
+
+export async function getBooksByPlaceInShelf(section: ShelfSection){
+    return await prisma.book.findMany({
+        where: {
+            shelfId: section.shelfId,
+            row_index: section.row_index,
+            col_index: section.col_index
+        },
+        include: {
+            authors: true
+        }
+    }) as BookWithAuthors[]
+}
+
+export async function addBook(title: string, authorId: number, section: ShelfSection){
     return await prisma.book.create({
         data: {
             title: title,
@@ -26,10 +58,10 @@ export async function addBook(title: string, authorId: number, shelfId: number |
                     id: authorId
                 }
             },
-            shelfId: shelfId || -1,
-            row_index: placeInShelf?.row_index,
-            col_index: placeInShelf?.col_index,
-            place: placeInShelf?.place
+            shelfId: section.shelfId,
+            row_index: section.row_index,
+            col_index: section.col_index,
+            place: 0
         }
     }) as Book;
 }

@@ -8,6 +8,12 @@ export type PlaceInShelf = {
     place: number
 }
 
+export type ShelfSection = {
+    shelfId: number,
+    row_index: number,
+    col_index: number
+}
+
 export enum ADMIN_BOOK_STATE {
     TABLE,
     CREATE,
@@ -21,5 +27,6 @@ export enum ADMIN_SHELF_STATE {
 
 export enum SHELF_STATE {
     LIST,
-    SINGE_VIEW
+    SINGE_VIEW,
+    SECTION_VIEW
 }

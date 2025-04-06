@@ -7,7 +7,6 @@ export default function Main(){
 
     return (
         <>
-            <GeneralHeader title="Library Manager"></GeneralHeader>
             <ShelfDisplay></ShelfDisplay>
         </>
     )
