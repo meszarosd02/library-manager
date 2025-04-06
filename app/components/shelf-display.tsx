@@ -2,7 +2,7 @@
 
 import { Author, Shelf } from "@prisma/client";
 import { useEffect, useState } from "react";
-import { getAllShelf } from "../actions/shelf";
+import { createShelf, getAllShelf } from "../actions/shelf";
 import { SHELF_STATE, ShelfSection } from "../lib/types";
 import ShelfView from "./shelf-view";
 import GeneralHeader from "./general-header";
@@ -10,6 +10,7 @@ import SubShelfView from "./subshelf-view";
 import AdminHeader from "./admin-header";
 import { addBook, createBookWithAuthor } from "../actions/book";
 import AddBook from "./add-book";
+import AddShelf from "./add-shelf";
 
 export default function ShelfDisplay() {
     const [shelves, setShelves] = useState<Shelf[]>([]);
@@ -36,9 +37,12 @@ export default function ShelfDisplay() {
     }
 
     const renderList = () => {
+        const addShelf = async () => {
+            setShelfState(SHELF_STATE.ADD_SHELF);
+        }
         return (
             <>
-                <GeneralHeader title="Shelves"></GeneralHeader>
+                <AdminHeader title="Shelves" addAction={addShelf}></AdminHeader>
                 <div className="flex flex-row">
                     {shelves.map((shelf) => (
                         <div key={shelf.id} onClick={() => shelfClick(shelf)} className="p-2 border border-gray-200 hover:bg-gray-600 cursor-pointer">
@@ -100,12 +104,27 @@ export default function ShelfDisplay() {
         )
     }
 
+    const renderAddShelf = () => {
+        const submitShelf = async (e: React.FormEvent, shelfName: string, rowCount: number, colCount: number) => {
+            e.preventDefault();
+            await createShelf(shelfName, rowCount, colCount);   
+        }
+
+        return (
+            <>
+                <AdminHeader title="Add Shelf"></AdminHeader>
+                <AddShelf cancelAction={() => setShelfState(SHELF_STATE.LIST)} submitAction={submitShelf}></AddShelf>
+            </>
+        )
+    }
+
     const renderSwitch = (state: SHELF_STATE) => {
         switch (state) {
             case SHELF_STATE.LIST: return renderList();
             case SHELF_STATE.SINGLE_VIEW: return renderSingleView();
             case SHELF_STATE.SECTION_VIEW: return renderSectionView();
             case SHELF_STATE.ADD_BOOK: return renderAddBook();
+            case SHELF_STATE.ADD_SHELF: return renderAddShelf();
         }
     }
 

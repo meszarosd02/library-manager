@@ -29,5 +29,6 @@ export enum SHELF_STATE {
     LIST,
     SINGLE_VIEW,
     SECTION_VIEW,
-    ADD_BOOK
+    ADD_BOOK,
+    ADD_SHELF
 }
