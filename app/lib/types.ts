@@ -18,3 +18,8 @@ export enum ADMIN_SHELF_STATE {
     TABLE,
     CREATE
 }
+
+export enum SHELF_STATE {
+    LIST,
+    SINGE_VIEW
+}
