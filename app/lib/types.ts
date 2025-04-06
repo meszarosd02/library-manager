@@ -27,6 +27,7 @@ export enum ADMIN_SHELF_STATE {
 
 export enum SHELF_STATE {
     LIST,
-    SINGE_VIEW,
-    SECTION_VIEW
+    SINGLE_VIEW,
+    SECTION_VIEW,
+    ADD_BOOK
 }

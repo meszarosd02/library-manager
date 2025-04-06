@@ -66,8 +66,7 @@ export async function addBook(title: string, authorId: number, section: ShelfSec
     }) as Book;
 }
 
-export async function createBookWithAuthor(title: string, authorName: string, shelfId: number | undefined, placeInShelf: PlaceInShelf | undefined){
-    if(placeInShelf && !shelfId) throw new Error("Invalid arguments: If placeInShelf exists, shelfId cannot be undefined")
+export async function createBookWithAuthor(title: string, authorName: string, section: ShelfSection){
     return await prisma.book.create({
         data: {
             title: title,
@@ -76,10 +75,10 @@ export async function createBookWithAuthor(title: string, authorName: string, sh
                     name: authorName
                 }
             },
-            shelfId: shelfId || -1,
-            row_index: placeInShelf?.row_index,
-            col_index: placeInShelf?.col_index,
-            place: placeInShelf?.place
+            shelfId: section.shelfId,
+            row_index: section.row_index,
+            col_index: section.col_index,
+            place: 0
         }
     }) as Book;
 }

@@ -43,7 +43,7 @@ export default function AdminBooks(){
         if(typeof author === "object" && "name" in author){ // author param is Author type
             await addBook(bookTitle, author.id, {shelfId: 0, row_index: 0, col_index: 0});
         }else{
-            await createBookWithAuthor(bookTitle, author, undefined, undefined);
+            await createBookWithAuthor(bookTitle, author, {shelfId: 0, row_index: 0, col_index: 0});
         }
         await fetchBooks();
     }
