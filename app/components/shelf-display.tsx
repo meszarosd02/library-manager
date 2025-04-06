@@ -70,11 +70,6 @@ export default function ShelfDisplay() {
     const renderSectionView = () => {
         if (!selectedSection) return;
         const addAction = async () => {
-            /*await addBook("Teszt", 1, {
-                shelfId: selectedSection.shelfId,
-                row_index: selectedSection.row_index,
-                col_index: selectedSection.col_index
-            })*/
             setShelfState(SHELF_STATE.ADD_BOOK);
         }
         return (
