@@ -1,36 +1,28 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Library manager web application
 
-## Getting Started
+Manage books, authors and shelves. 
+Add new authors manually, or add them when creating a new book. Set dimensions to your shelves, place the books in a subsection of a shelf.
 
-First, run the development server:
+## Pages
 
+`/` - Main page. Browse you shelves here, check inside the shelf, and even create new books inside a shelf section.
+
+`/admin/books` - List of books. Cannot yet add book to a shelf section from here.
+
+`/admin/authors` - List of authors. Add new authors by their name.
+
+`/admin/shelves` - List of shelves. Add new shelves by giving it a name, row and column count.
+
+
+## Setup
+
+Create a new `.env` file. Inside the environment file create a new entry with the key of `DATABASE_URL`. The value of this should the URL of your MySQL database (I haven't tested it with other relational databases).
 ```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+DATABASE_URL=mysql://[username]:[password]@[host]:[port]/[db_name]?schema=public
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
-
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
-
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
-
-## Learn More
-
-To learn more about Next.js, take a look at the following resources:
-
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+Run with npm
+```bash
+npm run build
+npm run start
+```
